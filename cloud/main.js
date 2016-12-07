@@ -1,82 +1,82 @@
 
-Parse.Cloud.define("resizeImage", function(request, response) {
-  	var query = new Parse.Query(request.params.itemType);
-  	query.select('imageFull');
-  	query.get(request.params.itemID, {
-	    success: function(item) {
-			if (!item.get("imageFull")) {
-	       		response.error("No image available");
-	        	return;
-	      	}
+// Parse.Cloud.define("resizeImage", function(request, response) {
+//   	var query = new Parse.Query(request.params.itemType);
+//   	query.select('imageFull');
+//   	query.get(request.params.itemID, {
+// 	    success: function(item) {
+// 			if (!item.get("imageFull")) {
+// 	       		response.error("No image available");
+// 	        	return;
+// 	      	}
 
-	      	Parse.Cloud.httpRequest({
-	        	url: item.get("imageFull").url()
+// 	      	Parse.Cloud.httpRequest({
+// 	        	url: item.get("imageFull").url()
 
-	      	}).then(function(response) {
-	        	var image = new Image();
-	        	return image.setData(response.buffer);
+// 	      	}).then(function(response) {
+// 	        	var image = new Image();
+// 	        	return image.setData(response.buffer);
 
-	      	}).then(function(image) {
-	        	var heightToWidthRatio = request.params.wantedHeight /  request.params.wantedWidth;
-	        	var currentHeightToWidthRatio = image.height() / image.width();
-	        	var ratioDiff = heightToWidthRatio - currentHeightToWidthRatio;
+// 	      	}).then(function(image) {
+// 	        	var heightToWidthRatio = request.params.wantedHeight /  request.params.wantedWidth;
+// 	        	var currentHeightToWidthRatio = image.height() / image.width();
+// 	        	var ratioDiff = heightToWidthRatio - currentHeightToWidthRatio;
 
-	        	var width = ratioDiff > 0? (request.params.wantedWidth/request.params.wantedHeight) * image.height() : image.width();
-	        	// console.log("width:"+width);
-	        	var height = ratioDiff > 0? image.height() : width * heightToWidthRatio;
-	        	// console.log("height:"+height);
-	        	var left = (image.width() - width) / 2;
-	        	if (left < 0) left = 0;
-	        	// console.log("left:"+left);
-	        	var top = (image.height() - height) / 2;
-	        	if (top < 0) top = 0;
-	        	// console.log("top:"+top);
+// 	        	var width = ratioDiff > 0? (request.params.wantedWidth/request.params.wantedHeight) * image.height() : image.width();
+// 	        	// console.log("width:"+width);
+// 	        	var height = ratioDiff > 0? image.height() : width * heightToWidthRatio;
+// 	        	// console.log("height:"+height);
+// 	        	var left = (image.width() - width) / 2;
+// 	        	if (left < 0) left = 0;
+// 	        	// console.log("left:"+left);
+// 	        	var top = (image.height() - height) / 2;
+// 	        	if (top < 0) top = 0;
+// 	        	// console.log("top:"+top);
 
-        		return image.crop({
-        	  		left: left,
-        	  		top: top,
-        	  		width: width,
-        	  		height: height
-        		});
-	      	}).then(function(image) {
-	        	// Resize the image
-	        	return image.scale({
-	          		width: request.params.wantedWidth,
-	          		height: request.params.wantedHeight
-	        	});
-	      	}).then(function(image) {
-	        	// Make sure it's a JPEG to save disk space and bandwidth.
-	        	return image.setFormat("JPEG");
+//         		return image.crop({
+//         	  		left: left,
+//         	  		top: top,
+//         	  		width: width,
+//         	  		height: height
+//         		});
+// 	      	}).then(function(image) {
+// 	        	// Resize the image
+// 	        	return image.scale({
+// 	          		width: request.params.wantedWidth,
+// 	          		height: request.params.wantedHeight
+// 	        	});
+// 	      	}).then(function(image) {
+// 	        	// Make sure it's a JPEG to save disk space and bandwidth.
+// 	        	return image.setFormat("JPEG");
 
-	      	}).then(function(image) {
-	        	// Get the image data in a Buffer.
-	        	return image.data();
+// 	      	}).then(function(image) {
+// 	        	// Get the image data in a Buffer.
+// 	        	return image.data();
 
-	      	}).then(function(buffer) {
-	        	// Save the image into a new file.
-	        	var base64 = buffer.toString("base64");
-	        	var cropped = new Parse.File(request.params.fileName, { base64: base64 });
-	        	return cropped.save();
+// 	      	}).then(function(buffer) {
+// 	        	// Save the image into a new file.
+// 	        	var base64 = buffer.toString("base64");
+// 	        	var cropped = new Parse.File(request.params.fileName, { base64: base64 });
+// 	        	return cropped.save();
 
-	      	}).then(function(cropped) {
-	        	// Attach the image file to the original object.
-	        	item.set(request.params.saveField, cropped);
-	        	item.save(null, {
-	          		success: function(item) {
-	          			console.log("new image has been saved");
-	            		response.success();
-	          		},
-	          		error: function(item, error) {
-	            		response.error(error);
-	          		}
-	        	});
-	      	});
-	    },
-	    error: function(object, error) {
-	      	response.error(error);
-	    }
-  	}); 
-});
+// 	      	}).then(function(cropped) {
+// 	        	// Attach the image file to the original object.
+// 	        	item.set(request.params.saveField, cropped);
+// 	        	item.save(null, {
+// 	          		success: function(item) {
+// 	          			console.log("new image has been saved");
+// 	            		response.success();
+// 	          		},
+// 	          		error: function(item, error) {
+// 	            		response.error(error);
+// 	          		}
+// 	        	});
+// 	      	});
+// 	    },
+// 	    error: function(object, error) {
+// 	      	response.error(error);
+// 	    }
+//   	}); 
+// });
 
 Parse.Cloud.define('editUser', function(request,response) {
 	Parse.Cloud.useMasterKey();
