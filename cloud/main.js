@@ -64,11 +64,10 @@ Parse.Cloud.define("resizeImage", function(request, response) {
 	        	item.set(request.params.saveField, cropped);
 	        	item.save(null, {
 	          		success: function(item) {
-	          			console.log("new image has been saved");
 	            		response.success();
 	          		},
 	          		error: function(item, error) {
-	            		response.error(error.Message);
+	            		response.error();
 	          		}
 	        	});
 	      	});
