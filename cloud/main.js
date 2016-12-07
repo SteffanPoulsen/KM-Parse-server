@@ -1,3 +1,4 @@
+// var Image = require("parse-image");
 
 // Parse.Cloud.define("resizeImage", function(request, response) {
 //   	var query = new Parse.Query(request.params.itemType);
@@ -78,73 +79,73 @@
 //   	}); 
 // });
 
-Parse.Cloud.define('editUser', function(request,response) {
-	Parse.Cloud.useMasterKey();
+// Parse.Cloud.define('editUser', function(request,response) {
+// 	Parse.Cloud.useMasterKey();
 
-	//Security
-	if (request.user.get("accessLvl") < 4) {
-		response.error("Du har ikke tilladelse til denne handling");
-		return;
-	}
+// 	//Security
+// 	if (request.user.get("accessLvl") < 4) {
+// 		response.error("Du har ikke tilladelse til denne handling");
+// 		return;
+// 	}
 
-	var user = new Parse.User();
-	user.id = request.params.itemID;
-	user.set('name', request.params.name);
-	user.set("searchName", request.params.searchName);
-	user.set("accessLvl", request.params.accessLvl);
-	user.save(null, {
-		success:function(item) {
-			response.success(item);
-		}, error:function(item, error) {
-			response.error(error);
-		}
-	});
+// 	var user = new Parse.User();
+// 	user.id = request.params.itemID;
+// 	user.set('name', request.params.name);
+// 	user.set("searchName", request.params.searchName);
+// 	user.set("accessLvl", request.params.accessLvl);
+// 	user.save(null, {
+// 		success:function(item) {
+// 			response.success(item);
+// 		}, error:function(item, error) {
+// 			response.error(error);
+// 		}
+// 	});
 
-});
+// });
 
-Parse.Cloud.define('createUser', function(request,response) {
-	//Security
-	if (request.user.get("accessLvl") < 4) {
-		response.error("Du har ikke tilladelse til denne handling");
-		return;
-	}
+// Parse.Cloud.define('createUser', function(request,response) {
+// 	//Security
+// 	if (request.user.get("accessLvl") < 4) {
+// 		response.error("Du har ikke tilladelse til denne handling");
+// 		return;
+// 	}
 
-	var user = new Parse.User();
-	user.set("name", request.params.name);
-	user.set("searchName", request.params.searchName);
-	user.set("email", request.params.email);
-	user.set("username", request.params.email);
-	user.set("password", request.params.password);
-	user.set("accessLvl", request.params.accessLvl);
-	user.signUp(null, {
-	    success:function(item) {
-	        response.success(item);
-	    }, error: function(item, error) {
-	        response.error(error);
-	    }
-	});
-});
+// 	var user = new Parse.User();
+// 	user.set("name", request.params.name);
+// 	user.set("searchName", request.params.searchName);
+// 	user.set("email", request.params.email);
+// 	user.set("username", request.params.email);
+// 	user.set("password", request.params.password);
+// 	user.set("accessLvl", request.params.accessLvl);
+// 	user.signUp(null, {
+// 	    success:function(item) {
+// 	        response.success(item);
+// 	    }, error: function(item, error) {
+// 	        response.error(error);
+// 	    }
+// 	});
+// });
 
-Parse.Cloud.define('removeUser', function(request,response) {
-	Parse.Cloud.useMasterKey();
+// Parse.Cloud.define('removeUser', function(request,response) {
+// 	Parse.Cloud.useMasterKey();
 
-	//Security
-	if (request.user.get("accessLvl") < 4) {
-		response.error("Du har ikke tilladelse til denne handling");
-		return;
-	}
+// 	//Security
+// 	if (request.user.get("accessLvl") < 4) {
+// 		response.error("Du har ikke tilladelse til denne handling");
+// 		return;
+// 	}
 
-	var user = new Parse.User();
-	user.id = request.params.itemID;
-	user.destroy({
-	    success: function(item) {
-	        response.success();
-	    },
-	    error: function(item, error) {
-	        response.error(error);
-	    }
-	});
-});
+// 	var user = new Parse.User();
+// 	user.id = request.params.itemID;
+// 	user.destroy({
+// 	    success: function(item) {
+// 	        response.success();
+// 	    },
+// 	    error: function(item, error) {
+// 	        response.error(error);
+// 	    }
+// 	});
+// });
 
 // Parse.Cloud.define('getImageDataURL', function(request,response) {
 //   	Parse.Cloud.httpRequest({
