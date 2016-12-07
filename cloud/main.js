@@ -146,21 +146,21 @@ Parse.Cloud.define('removeUser', function(request,response) {
 	});
 });
 
-Parse.Cloud.define('getImageDataURL', function(request,response) {
-  	Parse.Cloud.httpRequest({
-    	url: request.params.imgUrl
+// Parse.Cloud.define('getImageDataURL', function(request,response) {
+//   	Parse.Cloud.httpRequest({
+//     	url: request.params.imgUrl
 
-  	}).then(function(response) {
-    	var image = new Image();
-    	return image.setData(response.buffer);
+//   	}).then(function(response) {
+//     	var image = new Image();
+//     	return image.setData(response.buffer);
 
-  	}).then(function(image) {
-    	// Get the image data in a Buffer.
-    	return image.data();
+//   	}).then(function(image) {
+//     	// Get the image data in a Buffer.
+//     	return image.data();
 
-  	}).then(function(buffer) {
-    	// Save the image into a new file.
-    	var base64 = buffer.toString("base64");
-    	response.success(base64);
-  	});
-});
+//   	}).then(function(buffer) {
+//     	// Save the image into a new file.
+//     	var base64 = buffer.toString("base64");
+//     	response.success(base64);
+//   	});
+// });
