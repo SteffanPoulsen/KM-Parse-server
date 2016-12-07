@@ -35,15 +35,7 @@ var api = new ParseServer({
 var app = express();
 
 //Cors handling
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-};
-
-app.configure(function() {
-    app.use(allowCrossDomain);
-});
+app.all('*', function(req, res, next) { res.header('Access-Control-Allow-Origin', '*'); res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS'); res.header('Access-Control-Allow-Headers', 'Content-Type'); next(); });
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));
