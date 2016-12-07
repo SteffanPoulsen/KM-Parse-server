@@ -63,6 +63,7 @@ Parse.Cloud.define("resizeImage", function(request, response) {
 	        	// Attach the image file to the original object.
 	        	item.set(request.params.saveField, cropped);
 	        	item.save(null, {
+	        		useMasterKey: true, 
 	          		success: function(item) {
 	            		response.success();
 	          		},
@@ -93,6 +94,7 @@ Parse.Cloud.define('editUser', function(request,response) {
 	user.set("searchName", request.params.searchName);
 	user.set("accessLvl", request.params.accessLvl);
 	user.save(null, {
+		useMasterKey: true, 
 		success:function(item) {
 			response.success(item);
 		}, error:function(item, error) {
@@ -117,6 +119,7 @@ Parse.Cloud.define('createUser', function(request,response) {
 	user.set("password", request.params.password);
 	user.set("accessLvl", request.params.accessLvl);
 	user.signUp(null, {
+		useMasterKey: true, 
 	    success:function(item) {
 	        response.success(item);
 	    }, error: function(item, error) {
@@ -137,6 +140,7 @@ Parse.Cloud.define('removeUser', function(request,response) {
 	var user = new Parse.User();
 	user.id = request.params.itemID;
 	user.destroy({
+		useMasterKey: true, 
 	    success: function(item) {
 	        response.success();
 	    },
