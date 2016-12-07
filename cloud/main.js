@@ -6,7 +6,7 @@ Parse.Cloud.define("resizeImage", function(request, response) {
   	query.get(request.params.itemID, {
 	    success: function(item) {
 			if (!item.get("imageFull")) {
-	       		response.error("No image available");
+	       		response.error();
 	        	return;
 	      	}
 
@@ -73,7 +73,7 @@ Parse.Cloud.define("resizeImage", function(request, response) {
 	      	});
 	    },
 	    error: function(object, error) {
-	      	response.error(error);
+	      	response.error();
 	    }
   	}); 
 });
@@ -83,7 +83,7 @@ Parse.Cloud.define('editUser', function(request,response) {
 
 	//Security
 	if (request.user.get("accessLvl") < 4) {
-		response.error("Du har ikke tilladelse til denne handling");
+		response.error();
 		return;
 	}
 
@@ -96,7 +96,7 @@ Parse.Cloud.define('editUser', function(request,response) {
 		success:function(item) {
 			response.success(item);
 		}, error:function(item, error) {
-			response.error(error);
+			response.error();
 		}
 	});
 
@@ -105,7 +105,7 @@ Parse.Cloud.define('editUser', function(request,response) {
 Parse.Cloud.define('createUser', function(request,response) {
 	//Security
 	if (request.user.get("accessLvl") < 4) {
-		response.error("Du har ikke tilladelse til denne handling");
+		response.error();
 		return;
 	}
 
@@ -120,7 +120,7 @@ Parse.Cloud.define('createUser', function(request,response) {
 	    success:function(item) {
 	        response.success(item);
 	    }, error: function(item, error) {
-	        response.error(error);
+	        response.error();
 	    }
 	});
 });
@@ -130,7 +130,7 @@ Parse.Cloud.define('removeUser', function(request,response) {
 
 	//Security
 	if (request.user.get("accessLvl") < 4) {
-		response.error("Du har ikke tilladelse til denne handling");
+		response.error();
 		return;
 	}
 
@@ -141,7 +141,7 @@ Parse.Cloud.define('removeUser', function(request,response) {
 	        response.success();
 	    },
 	    error: function(item, error) {
-	        response.error(error);
+	        response.error();
 	    }
 	});
 });
