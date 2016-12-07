@@ -1,4 +1,4 @@
-// var Image = require("parse-image");
+var Image = require("parse-image");
 
 Parse.Cloud.define("resizeImage", function(request, response) {
   	var query = new Parse.Query(request.params.itemType);
@@ -68,7 +68,7 @@ Parse.Cloud.define("resizeImage", function(request, response) {
 	            		response.success();
 	          		},
 	          		error: function(item, error) {
-	            		response.error(error);
+	            		response.error(error.Message);
 	          		}
 	        	});
 	      	});
